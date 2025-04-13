@@ -4,7 +4,7 @@ metadata:
   name: static-website-pvc
 spec:
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
