@@ -9,7 +9,15 @@ Se incluye una imagen Docker personalizada que contiene el contenido del sitio w
 ##  Estructura del repositorio
 
 ```
-k8s-manifests/ ├── deployments/ │ └── static-website-deployment.yaml ├── services/ │ └── static-website-service.yaml ├── volumes/ │ ├── static-website-pv.yaml │ └── static-website-pvc.yaml └── README.md
+k8s-manifests/
+├── deployments/
+│ └── static-website-deployment.yaml
+├── services/
+│ └── static-website-service.yaml
+├── volumes/
+│ ├── static-website-pv.yaml
+│ └── static-website-pvc.yaml
+└── README.md
 ```
 
 ---
@@ -18,46 +26,50 @@ k8s-manifests/ ├── deployments/ │ └── static-website-deployment.ya
 
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
-- Docker (el que usa Minikube internamente)
+- Tener configurado el `minikube mount` hacia `/mnt/data`:
+
+```bash
+minikube start --driver=docker --mount --mount-string="C:\ruta\a\static-website:/mnt/data"
+```
 
 ---
 
-##  Cómo reproducir el entorno
+##  Cómo desplegar el sitio
 
-### 1. Clonar este repositorio
+### 1. Aplicar el PersistentVolume:
 
 ```bash
-git clone https://github.com/Guada-Aban/k8s-manifests.git
-cd k8s-manifests
+kubectl apply -f volumes/static-website-pv.yaml
 ```
 
-### 2. Iniciar Minikube
+### 2. Aplicar el PersistentVolumeClaim:
+
 ```bash
-minikube start --driver=docker
+kubectl apply -f volumes/static-website-pvc.yaml
+
 ```
 
-### 3. Crear la imagen Docker personalizada
-```bash
-minikube image build -t static-website:v1 .
-```
-
-### 4. Aplicar los manifiestos de Kubernetes
+### 3. Aplicar el Deployment:
 ```bash
 kubectl apply -f deployments/static-website-deployment.yaml
+```
+
+### 4. Aplicar el Service:
+```bash
 kubectl apply -f services/static-website-service.yaml
 ```
 
-### 5. Acceder al sitio desde el navegador
+### 5. Acceder al sitio:
 ```bash
 minikube service static-website-service
+
 ```
 Esto abrirá el navegador directamente con la URL local donde está corriendo el sitio.
 
 ### Notas sobre la implementación
-- En la primera parte del proyecto se intentó montar el contenido estático desde un volumen (hostPath) mapeado desde C:\minikube-data, cumpliendo la consigna original.
-- Sin embargo, debido a restricciones y comportamiento inconsistente del driver Docker en Windows con hostPath, se decidió usar una imagen Docker personalizada como alternativa.
-- Esta imagen se genera localmente y contiene todo el contenido del sitio, logrando una solución más simple, portable y funcional.
-- Los manifiestos originales de PersistentVolume y PVC también están incluidos en el repositorio como referencia.
+- El contenido del sitio web (HTML, CSS, imágenes) se encuentra en una carpeta local del host y se monta dentro del contenedor Nginx usando un volumen persistente con hostPath.
+- Se utilizó minikube mount para que el directorio local pueda ser accesible desde el contenedor:
+- Se descartó el uso de un Dockerfile con una imagen personalizada, ya que la consigna del trabajo práctico indicaba que el contenido debía montarse desde un volumen local.
 
  ### Autora
     Guadalupe Aban
