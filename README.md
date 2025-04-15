@@ -9,12 +9,7 @@ Se incluye una imagen Docker personalizada que contiene el contenido del sitio w
 ##  Estructura del repositorio
 
 ```
-k8s-manifests/
-├── deployments/             # Manifiesto de Deployment con imagen personalizada
-├── services/                # Manifiesto para exponer el sitio vía NodePort
-├── volumes/                 # (opcional) Contiene PV y PVC usados en intentos anteriores
-Dockerfile                   # Imagen Docker personalizada con el sitio web
-web-content/                 # Contenido del sitio web estático
+k8s-manifests/ ├── deployments/ │ └── static-website-deployment.yaml ├── services/ │ └── static-website-service.yaml ├── volumes/ │ ├── static-website-pv.yaml │ └── static-website-pvc.yaml └── README.md
 ```
 
 ---
