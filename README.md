@@ -51,12 +51,14 @@ kubectl apply -f volumes/static-website-pvc.yaml
 
 ### 3. Aplicar el Deployment:
 ```bash
-kubectl apply -f deployments/static-website-deployment.yaml
+kubectl apply -f k8s-manifests/deployments/static-website-deployment.yaml
+
 ```
 
 ### 4. Aplicar el Service:
 ```bash
-kubectl apply -f services/static-website-service.yaml
+kubectl apply -f k8s-manifests/services/static-website-service.yaml
+
 ```
 
 ### 5. Acceder al sitio:
