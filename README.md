@@ -50,7 +50,7 @@ Este paso debe hacerse en una terminal aparte y dejarse abierta durante todo el 
 ```bash
 minikube mount "<ruta-local-static-website>:/mnt/data"
 ```
-Donde <ruta-local-static-website> es la ruta en su PC donde haya clonado el repo
+Donde ruta-local-static-website  es la ruta en su PC donde haya clonado el repo
 Por ejemplo:
 
 ```bash
