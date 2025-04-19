@@ -9,4 +9,4 @@ spec:
     - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /mnt/web
+    path: /mnt/data
