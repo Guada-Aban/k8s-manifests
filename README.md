@@ -26,45 +26,51 @@ k8s-manifests/
 
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
-- Tener configurado el `minikube mount` hacia `/mnt/data`:
 
-```bash
-minikube start --driver=docker --mount --mount-string="C:\ruta\a\static-website:/mnt/data"
-```
 
 ---
 
-##  Cómo desplegar el sitio
+##  Paso a paso para reproducir el entorno
 
-### 1. Aplicar el PersistentVolume:
+###1. Clonar los repositorios necesarios
+
+```bash
+git clone https://github.com/Guada-Aban/k8s-manifests.git
+git clone https://github.com/Guada-Aban/static-website.git
+```
+
+###2. Iniciar minikube
+
+```bash
+minikube start --driver=docker
+```
+
+###3. Montar el contenido en Minikube (en una consola separada)
+Este paso debe hacerse en una terminal aparte y dejarse abierta durante todo el despliegue.
+```bash
+minikube mount "<ruta-local-static-website>:/mnt/data"
+```
+Donde <ruta-local-static-website> es la ruta en su PC donde haya clonado el repo
+Por ejemplo:
+
+```bash
+minikube mount "C:\Users\profe\Documentos\static-website:/mnt/data"
+```
+
+###4. Aplicar los manifiestos
+Desde el directorio `k8s-manifests`:
 
 ```bash
 kubectl apply -f volumes/static-website-pv.yaml
-```
-
-### 2. Aplicar el PersistentVolumeClaim:
-
-```bash
 kubectl apply -f volumes/static-website-pvc.yaml
-
-```
-
-### 3. Aplicar el Deployment:
-```bash
 kubectl apply -f deployments/static-website-deployment.yaml
-
-```
-
-### 4. Aplicar el Service:
-```bash
 kubectl apply -f services/static-website-service.yaml
-
 ```
 
-### 5. Acceder al sitio:
+###5. Acceder a la aplicacion
+
 ```bash
 minikube service static-website-service
-
 ```
 Esto abrirá el navegador directamente con la URL local donde está corriendo el sitio.
 
