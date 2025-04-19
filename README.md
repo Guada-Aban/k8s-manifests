@@ -32,20 +32,20 @@ k8s-manifests/
 
 ##  Paso a paso para reproducir el entorno
 
-###1. Clonar los repositorios necesarios
+### 1. Clonar los repositorios necesarios
 
 ```bash
 git clone https://github.com/Guada-Aban/k8s-manifests.git
 git clone https://github.com/Guada-Aban/static-website.git
 ```
 
-###2. Iniciar minikube
+### 2. Iniciar minikube
 
 ```bash
 minikube start --driver=docker
 ```
 
-###3. Montar el contenido en Minikube (en una consola separada)
+### 3. Montar el contenido en Minikube (en una consola separada)
 Este paso debe hacerse en una terminal aparte y dejarse abierta durante todo el despliegue.
 ```bash
 minikube mount "<ruta-local-static-website>:/mnt/data"
@@ -57,7 +57,7 @@ Por ejemplo:
 minikube mount "C:\Users\profe\Documentos\static-website:/mnt/data"
 ```
 
-###4. Aplicar los manifiestos
+### 4. Aplicar los manifiestos
 Desde el directorio `k8s-manifests`:
 
 ```bash
@@ -67,7 +67,7 @@ kubectl apply -f deployments/static-website-deployment.yaml
 kubectl apply -f services/static-website-service.yaml
 ```
 
-###5. Acceder a la aplicacion
+### 5. Acceder a la aplicacion
 
 ```bash
 minikube service static-website-service
